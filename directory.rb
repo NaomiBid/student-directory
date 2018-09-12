@@ -6,14 +6,24 @@ def input_students
   if name.empty?
     exit
   end
+  puts "Enter their cohort"
+  cohort = gets.strip
+  if cohort.empty?
+    cohort = "unknown"
+  end
   while !name.empty? do
-    students << {name: name,cohort: :november}
+    students << {name: name,cohort: cohort}
     if students.count == 1
       puts "Now we have #{students.count} student"
     else
       puts "Now we have #{students.count} students"
     end
     name = gets.strip
+    puts "Enter thier cohort"
+    cohort = gets.strip.to_sym
+    if cohort.empty?
+      cohort = "unknown"
+    end
   end
   students
 end
