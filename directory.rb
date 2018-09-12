@@ -2,7 +2,7 @@ def input_students
   students = []
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  name = gets.chomp
+  name = gets.strip
   if name.empty?
     exit
   end
@@ -13,7 +13,7 @@ def input_students
     else
       puts "Now we have #{students.count} students"
     end
-    name = gets.chomp
+    name = gets.strip
   end
   students
 end
