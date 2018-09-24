@@ -18,14 +18,19 @@ end
 def process(selection)
   case selection
   when "1"
+    puts "You chose 1"
     input_students
   when "2"
+    puts "You chose 2"
     show_students
   when "9"
+    puts "You chose 9"
     exit # this will cause the program to terminate
   when "3"
+    puts "You chose 3"
     save_students
   when "4"
+    puts "You chose 4"
     load_students
   else
     puts "I don't know what you meant, try again"
