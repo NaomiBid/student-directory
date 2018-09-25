@@ -1,11 +1,11 @@
-@students = [] # an empty array accessible to all methods
+@students = []
 
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
   puts "4. Load the list from students.csv"
-  puts "9. Exit" # 9 because we'll be adding more items
+  puts "9. Exit"
 end
 
 def interactive_menu
@@ -25,7 +25,7 @@ def process(selection)
     show_students
   when "9"
     puts "You chose 9"
-    exit # this will cause the program to terminate
+    exit
   when "3"
     puts "You chose 3"
     save_students
@@ -37,17 +37,18 @@ def process(selection)
   end
 end
 
+def add_students_to_array
+  @students << {name: $student_name, cohort: :november}
+end
+
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  # get the first name
   name = STDIN.gets.chomp
-  # while the name is not empty, repeat this code
   while !name.empty? do
-    # add the student hash to the array
-    @students << {name: name, cohort: :november}
+    $student_name = name
+    add_students_to_array
     puts "Now we have #{@students.count} students"
-    # get another name from the user
     name = STDIN.gets.chomp
   end
 end
@@ -89,7 +90,8 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+  $student_name = name
+  add_students_to_array
   end
   file.close
 end
