@@ -1,11 +1,11 @@
-@students = []
+@students = [] # an empty array accessible to all methods
 
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
   puts "4. Load the list from students.csv"
-  puts "9. Exit"
+  puts "9. Exit" # 9 because we'll be adding more items
 end
 
 def interactive_menu
@@ -18,37 +18,31 @@ end
 def process(selection)
   case selection
   when "1"
-    puts "You chose 1"
     input_students
   when "2"
-    puts "You chose 2"
     show_students
   when "9"
-    puts "You chose 9"
-    exit
+    exit # this will cause the program to terminate
   when "3"
-    puts "You chose 3"
     save_students
   when "4"
-    puts "You chose 4"
     load_students
   else
     puts "I don't know what you meant, try again"
   end
 end
 
-def add_students_to_array
-  @students << {name: $student_name, cohort: :november}
-end
-
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
+  # get the first name
   name = STDIN.gets.chomp
+  # while the name is not empty, repeat this code
   while !name.empty? do
-    $student_name = name
-    add_students_to_array
+    # add the student hash to the array
+    @students << {name: name, cohort: :november}
     puts "Now we have #{@students.count} students"
+    # get another name from the user
     name = STDIN.gets.chomp
   end
 end
@@ -75,9 +69,9 @@ def print_footer
 end
 
 def save_students
-  puts "Enter the name of the file you wish to save your data to"
-  filename = gets.chomp
-  file = File.open(filename, "w")
+  # open the file for writing
+  file = File.open("students.csv", "w")
+  # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
@@ -87,13 +81,10 @@ def save_students
 end
 
 def load_students(filename = "students.csv")
-  puts "Enter the name of the file you wish to load"
-#  filename = gets.chomp
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
-  $student_name = name
-  add_students_to_array
+    @students << {name: name, cohort: cohort.to_sym}
   end
   file.close
 end
@@ -109,7 +100,6 @@ def try_load_students
     exit # quit the program
   end
 end
-data = __FILE__
-puts File.read(data)
+
 try_load_students
 interactive_menu
