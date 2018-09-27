@@ -78,24 +78,28 @@ def save_students
   puts "Enter the name of the file you wish to save your data to"
   filename = gets.chomp
   file = File.open(filename, "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  File::open(filename, "w") do
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
   end
-  file.close
+#  file.close
 end
 
 def load_students(filename = "students.csv")
   puts "Enter the name of the file you wish to load"
-#  filename = gets.chomp
+  filename = gets.chomp
   file = File.open(filename, "r")
-  file.readlines.each do |line|
-  name, cohort = line.chomp.split(',')
-  $student_name = name
-  add_students_to_array
-  end
-  file.close
+  File::open(filename, "r") do
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(',')
+      $student_name = name
+      add_students_to_array
+    end
+  end 
+#   file.close
 end
 
 def try_load_students
@@ -109,7 +113,7 @@ def try_load_students
     exit # quit the program
   end
 end
-data = __FILE__
-puts File.read(data)
+# data = __FILE__
+# puts File.read(data)
 try_load_students
 interactive_menu
